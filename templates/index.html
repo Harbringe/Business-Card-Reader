@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload file</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f6f8fb;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60, 60, 130, 0.08);
+            padding: 2.5rem 2.2rem 1.2rem 2.2rem;
+            max-width: 600px;
+            width: 100%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            font-size: 1.35rem;
+            color: #22223b;
+            text-align: left;
+        }
+
+        .upload-area {
+            border: 2px dashed #bfc8e6;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 2.2rem 1rem 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 0.7rem;
+            position: relative;
+        }
+
+        .upload-area.dragover {
+            border-color: #4f8cff;
+            background: #eaf1ff;
+        }
+
+        .upload-area input[type="file"] {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 2.7rem;
+            color: #4f8cff;
+            margin-bottom: 0.5rem;
+        }
+
+        .desc {
+            color: #6c6f80;
+            font-size: 1.01rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .filename-preview {
+            color: #2563eb;
+            font-size: 1.01rem;
+            margin-top: 0.7rem;
+            margin-bottom: 0.2rem;
+            word-break: break-all;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.93rem;
+            color: #a0aec0;
+            margin-bottom: 0.7rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.1rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: #22223b;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        input[type="url"] {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1.5px solid #e0e6f7;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .table-example {
+            background: #f1f6ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .table-icon {
+            width: 32px;
+            height: 32px;
+            background: #e2f3e5;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.9rem;
+            font-size: 1.5rem;
+        }
+
+        .table-desc {
+            flex: 1;
+            color: #2d3a4a;
+            font-size: 0.97rem;
+        }
+
+        .table-download {
+            margin-left: 1rem;
+        }
+
+        .table-download button {
+            background: #f5f7fa;
+            border: 1.5px solid #e0e6f7;
+            color: #22223b;
+            border-radius: 7px;
+            padding: 0.5rem 1.1rem;
+            font-size: 0.97rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .table-download button:hover {
+            background: #eaf1ff;
+        }
+
+        .info-box {
+            background: #f1f6ff;
+            border-left: 4px solid #4f8cff;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            font-size: 0.97rem;
+            color: #2d3a4a;
+            margin-bottom: 1.2rem;
+        }
+
+        .bottom-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.2rem;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 1.1rem;
+        }
+
+        .help-link {
+            color: #4f8cff;
+            text-decoration: none;
+            font-size: 0.97rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .help-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            background: #f5f7fa;
+            color: #22223b;
+            border: 1.5px solid #e0e6f7;
+            border-radius: 7px;
+            padding: 0.6rem 1.3rem;
+            font-size: 1.01rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .btn.primary {
+            background: #4f8cff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn.primary:disabled {
+            background: #bfc8e6;
+            color: #fff;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 700px) {
+            .card {
+                max-width: 98vw;
+                padding: 1.2rem 0.5rem;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 0.2rem;
+                align-items: flex-start;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .card h2 {
+                font-size: 1.05rem;
+            }
+
+            .desc,
+            .info-box,
+            label,
+            .help-link,
+            .btn,
+            .filename-preview {
+                font-size: 0.93rem;
+            }
+
+            .upload-icon {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Upload file</h2>
+        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">&#8682;</div>
+                <div class="desc" id="uploadDesc">Drag and Drop file here or <span
+                        style="color:#4f8cff;text-decoration:underline;cursor:pointer;" id="chooseFile">Choose
+                        file</span></div>
+                <input type="file" name="file" id="fileInput" accept="image/*" required>
+                <div class="filename-preview" id="filenamePreview" style="display:none;"></div>
+                <div class="info-row">
+                    <span>Supported formats: PNG, JPG, JPEG</span>
+                    <span>Maximum size: 25MB</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sheet_url">Optional: Google Sheet URL</label>
+                <input type="url" name="sheet_url" id="sheet_url"
+                    placeholder="https://docs.google.com/spreadsheets/d/...">
+            </div>
+            <div class="info-box">
+                <b>Google Sheets users:</b> To enable writing, add our service account email:<br>
+                <span
+                    style="color:#4f8cff;font-weight:600;">business-cards@businesscards-464915.iam.gserviceaccount.com</span><br>
+                as an <b>Editor</b> to your Google Sheet.<br><br>
+                <b>Note:</b> If you do not provide a Google Sheet URL, you will automatically download a CSV file with
+                your extracted data.
+            </div>
+            <div class="bottom-bar">
+                <a href="#" class="help-link">&#10068; Help Center</a>
+                <div>
+                    <button type="button" class="btn" onclick="window.location.reload()">Cancel</button>
+                    <button type="submit" class="btn primary" id="nextBtn" disabled>Next</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Drag and drop UI logic
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const chooseFile = document.getElementById('chooseFile');
+        const uploadDesc = document.getElementById('uploadDesc');
+        const filenamePreview = document.getElementById('filenamePreview');
+        const nextBtn = document.getElementById('nextBtn');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        chooseFile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.click();
+        });
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                showFilename();
+            }
+        });
+        fileInput.addEventListener('change', showFilename);
+
+        function showFilename() {
+            if (fileInput.files.length) {
+                filenamePreview.style.display = 'block';
+                filenamePreview.innerText = fileInput.files[0].name;
+                nextBtn.disabled = false;
+            } else {
+                filenamePreview.style.display = 'none';
+                nextBtn.disabled = true;
+            }
+        }
+        // Enable Next if file is prefilled (browser autofill)
+        window.onload = showFilename;
+    </script>
+</body>
+
+</html>
